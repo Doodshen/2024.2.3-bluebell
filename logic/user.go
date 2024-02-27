@@ -8,12 +8,23 @@ import (
 
 //存放业务逻辑的代码
 
-func SignUp(p *models.ParamSignUp) {
+func SignUp(p *models.ParamSignUp) (err error) {
 
 	//1 判断用户存不存在
-	mysql.QueryUserByUsername()
+	if err := mysql.CheckUserExists(p.UserName); err != nil {
+		return err
+	}
+
 	//2 生成UID
-	sf.GenID()
+	userID := sf.GenID()
+	//构建User实例
+	u := models.User{
+		UserID:   userID,
+		Username: p.UserName,
+		Password: p.Password,
+	}
+
 	//3 保存到数据库
-	mysql.InserUser()
+	return mysql.InsertUser(u)
+
 }
