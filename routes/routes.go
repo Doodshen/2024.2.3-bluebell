@@ -17,9 +17,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//注册路由
-
 func SetUpRouter() *gin.Engine {
+
 	r := gin.New()
 	r.Use(logger.GinLogger(), logger.GinRecovery(true))
 
@@ -30,5 +29,8 @@ func SetUpRouter() *gin.Engine {
 	//注册业务路由
 	r.POST("/signup", controller.SignUpHandler)
 
+	r.NoRoute(func(ctx *gin.Context) {
+		ctx.String(http.StatusNotFound, "没有发现路由")
+	})
 	return r
 }
