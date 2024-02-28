@@ -2,7 +2,7 @@
  * @Author: Github Doodshen Github 2475169766@qq.com
  * @Date: 2024-02-03 14:58:10
  * @LastEditors: Github Doodshen Github 2475169766@qq.com
- * @LastEditTime: 2024-02-27 20:59:01
+ * @LastEditTime: 2024-02-28 11:10:00
  * @FilePath: \2024.2.3 bluebell\main.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -44,7 +44,7 @@ func main() {
 		fmt.Printf("init setting failed err :%v\n", err)
 	}
 	//2 初始化日志
-	if err := logger.Init(setting.Conf.LogConfig); err != nil {
+	if err := logger.Init(setting.Conf.LogConfig, setting.Conf.Mode); err != nil {
 		fmt.Printf("Init logger failed ,err :%v\n", err)
 	}
 	defer zap.L().Sync()
@@ -72,7 +72,7 @@ func main() {
 	}
 
 	//5注册路由
-	r := routes.SetUpRouter()
+	r := routes.SetUpRouter(setting.Conf.Mode)
 	err := r.Run(fmt.Sprintf(":%d", setting.Conf.Port))
 	if err != nil {
 		fmt.Printf("run server failed err:#{err}\b")
