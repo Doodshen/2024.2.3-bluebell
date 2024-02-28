@@ -2,7 +2,7 @@
  * @Author: Github Doodshen Github 2475169766@qq.com
  * @Date: 2024-02-28 16:30:52
  * @LastEditors: Github Doodshen Github 2475169766@qq.com
- * @LastEditTime: 2024-02-28 18:49:07
+ * @LastEditTime: 2024-02-28 18:54:50
  * @FilePath: \2024.2.3 bluebell\middleware\auth.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -14,6 +14,10 @@ import (
 	"web_app/pkg/jwt"
 
 	"github.com/gin-gonic/gin"
+)
+
+const (
+	CtxUserIDKey = "userID"
 )
 
 func JWTAuthMiddleware() func(c *gin.Context) {
@@ -43,7 +47,7 @@ func JWTAuthMiddleware() func(c *gin.Context) {
 		}
 
 		//将当前请求的username信息保存到请求的上下文中
-		c.Set("userID", mc.UserID)
-		c.Next() //后续的处理函数可以通过c.Get（”username“）来获取到请求的用户信息
+		c.Set(CtxUserIDKey, mc.UserID)
+		c.Next() //后续的处理函数可以通过c.Get（）就可以来获取到当前登录的用户信息
 	}
 }
