@@ -1,8 +1,16 @@
 /*
  * @Author: Github Doodshen Github 2475169766@qq.com
+ * @Date: 2024-02-03 14:58:10
+ * @LastEditors: Github Doodshen Github 2475169766@qq.com
+ * @LastEditTime: 2024-02-28 11:28:33
+ * @FilePath: \2024.2.3 bluebell\routes\routes.go
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+/*
+ * @Author: Github Doodshen Github 2475169766@qq.com
  * @Date: 2024-01-30 21:03:01
  * @LastEditors: Github Doodshen Github 2475169766@qq.com
- * @LastEditTime: 2024-02-28 11:12:00
+ * @LastEditTime: 2024-02-28 11:19:54
  * @FilePath: \web-app2\routes\routes.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -10,7 +18,7 @@ package routes
 
 import (
 	"net/http"
-	"web_app/controller"
+	controller "web_app/controller"
 	"web_app/logger"
 	setting "web_app/settings"
 
@@ -32,6 +40,8 @@ func SetUpRouter(mode string) *gin.Engine {
 
 	//注册业务路由
 	r.POST("/signup", controller.SignUpHandler)
+	//登录业务
+	r.POST("/login", controller.LoginHandler)
 
 	r.NoRoute(func(ctx *gin.Context) {
 		ctx.String(http.StatusNotFound, "没有发现路由")
