@@ -11,6 +11,8 @@ const (
 	CodeUserNotExist
 	CodeInvalidPassword
 	CodeServerBusy
+	CodeInvalidToken
+	CodeNeedLogin
 )
 
 var codeMasMap = map[Rescode]string{
@@ -19,6 +21,8 @@ var codeMasMap = map[Rescode]string{
 	CodeUserExist:       "用户已经存在",
 	CodeInvalidPassword: "密码错误",
 	CodeServerBusy:      "服务器繁忙",
+	CodeInvalidToken:    "无效的token",
+	CodeNeedLogin:       "需要登录",
 }
 
 //Msg()根据状态码返回错误信息，并判断该状态码是不是有对应消息，如果没有都返回服务器繁忙
