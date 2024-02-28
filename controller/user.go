@@ -34,9 +34,36 @@ func SignUpHandler(c *gin.Context) {
 	}
 
 	//2 业务处理
-	logic.SignUp(p)
+	if err := logic.SignUp(p); err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"msg": "注册失败",
+		})
+		return
+	}
 	//3 返回响应
 	c.JSON(http.StatusOK, gin.H{
 		"msg": "success",
+	})
+}
+
+// LoginHandler 处理登录请求的函数
+func LoginHandler(c *gin.Context) {
+	//1 参数校验
+	p := new(models.ParamLogin)
+	if err := c.ShouldBind(p); err != nil {
+
+	}
+
+	//2 业务处理
+	if err := logic.Login(p); err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"msg": "用户名或密码错误",
+		})
+		return
+	}
+
+	//3 返回响应
+	c.JSON(http.StatusOK, gin.H{
+		"msg": "登录成功",
 	})
 }
