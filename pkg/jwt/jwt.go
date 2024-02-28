@@ -48,7 +48,6 @@ func ParseToken(tokenString string) (*MyClaims, error) {
 	// 解析token
 	// 如果是自定义Claim结构体则需要使用 ParseWithClaims 方法----不仅校验外还直接写到我们的变量当中去
 	var mc = new(MyClaims)
-
 	token, err := jwt.ParseWithClaims(tokenString, mc, func(token *jwt.Token) (i interface{}, err error) {
 		// 直接使用标准的Claim则可以直接使用Parse方法
 		//token, err := jwt.Parse(tokenString, func(token *jwt.Token) (i interface{}, err error) {
