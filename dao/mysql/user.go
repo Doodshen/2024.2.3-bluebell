@@ -2,7 +2,7 @@
  * @Author: Github Doodshen Github 2475169766@qq.com
  * @Date: 2024-02-25 12:36:32
  * @LastEditors: Github Doodshen Github 2475169766@qq.com
- * @LastEditTime: 2024-02-27 21:55:29
+ * @LastEditTime: 2024-02-28 14:11:58
  * @FilePath: \2024.2.3 bluebell\dao\mysql\user.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -21,6 +21,12 @@ import (
 
 const secret = "kingshen"
 
+var (
+	ErrorIsExist         = errors.New("用户已经存在")
+	ErrorIsNotExist      = errors.New("用户不存在")
+	ErrorInvalidPassword = errors.New("密码错误")
+)
+
 // CheckUserExists 检查指定数据库是否存在该用户
 func CheckUserExists(username string) (err error) {
 	sqlstr := "select count(user_id) from user where username = ?"
@@ -29,7 +35,7 @@ func CheckUserExists(username string) (err error) {
 		return err
 	}
 	if count > 0 {
-		return errors.New("用户已经存在")
+		return ErrorIsExist
 	}
 	return
 }
@@ -58,7 +64,7 @@ func Login(u *models.User) (err error) {
 	err = db.Get(u, sqlstr, u.Username)
 	//判断用户存不存在
 	if err == sql.ErrNoRows {
-		return errors.New("用户不存在")
+		return ErrorIsNotExist
 	}
 	//查询数据库失败
 	if err != nil {
@@ -67,7 +73,7 @@ func Login(u *models.User) (err error) {
 	//判断密码是否正确
 	password := encryptPassword(oPassword)
 	if password != u.Password {
-		return errors.New("密码错误")
+		return ErrorInvalidPassword
 	}
 	return
 }
