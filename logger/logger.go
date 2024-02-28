@@ -2,7 +2,7 @@
  * @Author: Github Doodshen Github 2475169766@qq.com
  * @Date: 2024-01-30 14:48:13
  * @LastEditors: Github Doodshen Github 2475169766@qq.com
- * @LastEditTime: 2024-01-30 22:42:53
+ * @LastEditTime: 2024-02-28 11:02:00
  * @FilePath: \2024.1.26 web-app\logger\logger.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -27,7 +27,7 @@ import (
 var lg *zap.Logger
 
 // Init 初始化Logger
-func Init(cfg *setting.LogConfig) (err error) {
+func Init(cfg *setting.LogConfig, mode string) (err error) {
 	writeSyncer := getLogWriter(
 		cfg.Filename,
 		cfg.MaxSize,
@@ -39,8 +39,20 @@ func Init(cfg *setting.LogConfig) (err error) {
 	if err != nil {
 		return
 	}
-	core := zapcore.NewCore(encoder, writeSyncer, l)
 
+	var core zapcore.Core
+
+	if mode == "dev" {
+		//进入开发模式，日志输出到终端
+		consoleEnbcoder := zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig())
+		core = zapcore.NewTee(
+			zapcore.NewCore(encoder, writeSyncer, l),
+			zapcore.NewCore(consoleEnbcoder, zapcore.Lock(os.Stdout), zap.DebugLevel),
+		)
+	} else {
+		core = zapcore.NewCore(encoder, writeSyncer, l)
+
+	}
 	lg = zap.New(core, zap.AddCaller())
 	zap.ReplaceGlobals(lg) // 替换zap包中全局的logger实例，后续在其他包中只需使用zap.L()调用即可
 	return
