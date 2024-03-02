@@ -12,7 +12,6 @@ import (
 	"crypto/md5"
 	"database/sql"
 	"encoding/hex"
-	"errors"
 	"web_app/models"
 )
 
@@ -20,12 +19,6 @@ import (
 //等待logic层根据业务需求调用
 
 const secret = "kingshen"
-
-var (
-	ErrorIsExist         = errors.New("用户已经存在")
-	ErrorIsNotExist      = errors.New("用户不存在")
-	ErrorInvalidPassword = errors.New("密码错误")
-)
 
 // CheckUserExists 检查指定数据库是否存在该用户
 func CheckUserExists(username string) (err error) {
@@ -35,7 +28,7 @@ func CheckUserExists(username string) (err error) {
 		return err
 	}
 	if count > 0 {
-		return ErrorIsExist
+		return ErrorUserExist
 	}
 	return
 }
@@ -64,7 +57,7 @@ func Login(u *models.User) (err error) {
 	err = db.Get(u, sqlstr, u.Username)
 	//判断用户存不存在
 	if err == sql.ErrNoRows {
-		return ErrorIsNotExist
+		return ErrorUserNotExist
 	}
 	//查询数据库失败
 	if err != nil {

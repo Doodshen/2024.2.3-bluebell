@@ -40,7 +40,7 @@ func SignUpHandler(c *gin.Context) {
 	//2 业务处理
 	if err := logic.SignUp(p); err != nil {
 		zap.L().Error("SingUp with failed ", zap.Error(err))
-		if errors.Is(err, mysql.ErrorIsNotExist) {
+		if errors.Is(err, mysql.ErrorUserNotExist) {
 			ResponseError(c, CodeUserNotExist)
 			return
 		}
