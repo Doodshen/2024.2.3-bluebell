@@ -19,5 +19,5 @@ type Post struct {
 	Status      int32     `json:"status" db:"status"`
 	CreateTime  time.Time `json:"create_time" db:"create_time"`
 	Title       string    `json:"title" db:"title" binding:"required"`
-	Context     string    `json:"context" db:"context" binding:"required"`
+	Content     string    `json:"context" db:"content" binding:"required"`
 }
