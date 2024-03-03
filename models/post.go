@@ -19,7 +19,7 @@ type Post struct {
 	Status      int32     `json:"status" db:"status"`
 	CreateTime  time.Time `json:"create_time" db:"create_time"`
 	Title       string    `json:"title" db:"title" binding:"required"`
-	Content     string    `json:"context" db:"content" binding:"required"`
+	Content     string    `json:"content" db:"content" binding:"required"`
 }
 
 //定义帖子详情结构体

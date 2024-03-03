@@ -64,7 +64,20 @@ func GetPostyDetailHandler(c *gin.Context) {
 		ResponseError(c, CodeServerBusy)
 		return
 	}
+	//返回响应
+	ResponseSuccess(c, data)
+}
+
+func GetPostListHandler(c *gin.Context) {
+	//参数校验，获取页数和条数
+	page, size := getPageSize(c)
+	//查询数据
+	data, err := logic.GetPostList(page, size)
+	if err != nil {
+		zap.L().Error("GetPostlist failed:%v:", zap.Error(err))
+	}
 
 	//返回响应
 	ResponseSuccess(c, data)
+
 }

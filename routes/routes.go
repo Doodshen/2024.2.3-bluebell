@@ -52,6 +52,7 @@ func SetUpRouter(mode string) *gin.Engine {
 
 		//查询帖子详情
 		v1.GET("/post/:id", controller.GetPostyDetailHandler)
+		v1.GET("posts/", controller.GetPostListHandler)
 	}
 
 	//模拟登录以后才能使用的功能
