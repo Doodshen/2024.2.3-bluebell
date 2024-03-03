@@ -9,6 +9,7 @@
 package controller
 
 import (
+	"strconv"
 	"web_app/logic"
 	"web_app/models"
 
@@ -44,4 +45,26 @@ func CreatePostHandler(c *gin.Context) {
 
 	//返回响应
 	ResponseSuccess(c, nil)
+}
+
+// GetPostDetailHandler 根据ID查询帖子详情
+func GetPostyDetailHandler(c *gin.Context) {
+	//1 参数校验 --get请求就是查看url上的参数
+	pidstr := c.Param("id")                      //查询出来的pid是string
+	pid, err := strconv.ParseInt(pidstr, 10, 64) //10 为十进制，64表示int64
+	if err != nil {
+		zap.L().Error("get post detail invalid params ", zap.Error(err))
+		ResponseError(c, CodeInvalidParam)
+		return
+	}
+	//2 查询帖子详情
+	data, err := logic.GetPostDetail(pid)
+	if err != nil {
+		zap.L().Error("get post detaile failed ", zap.Error(err))
+		ResponseError(c, CodeServerBusy)
+		return
+	}
+
+	//返回响应
+	ResponseSuccess(c, data)
 }

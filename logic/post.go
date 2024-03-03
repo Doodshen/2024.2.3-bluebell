@@ -15,3 +15,7 @@ func CreatePost(p *models.Post) (err error) {
 	//2 执行入库
 	return mysql.CreatePost(p)
 }
+
+func GetPostDetail(id int64) (data *models.Post, err error) {
+	return mysql.GetPostByID(id)
+}
