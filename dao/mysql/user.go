@@ -2,7 +2,7 @@
  * @Author: Github Doodshen Github 2475169766@qq.com
  * @Date: 2024-02-25 12:36:32
  * @LastEditors: Github Doodshen Github 2475169766@qq.com
- * @LastEditTime: 2024-02-28 14:11:58
+ * @LastEditTime: 2024-03-03 17:26:29
  * @FilePath: \2024.2.3 bluebell\dao\mysql\user.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -69,4 +69,13 @@ func Login(u *models.User) (err error) {
 		return ErrorInvalidPassword
 	}
 	return
+}
+
+// GetUserById 通过id查询作者信息
+func GetUserById(id int64) (user *models.User, err error) {
+	user = new(models.User)
+	sqlstr := `select user_id,username from user where user_id=?`
+	err = db.Get(user, sqlstr, id)
+	return
+
 }

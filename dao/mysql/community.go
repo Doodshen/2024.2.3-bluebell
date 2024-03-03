@@ -30,12 +30,15 @@ func GetCommunityList() (CommunityList []*models.Community, err error) {
 	return
 }
 
-// GetCommunityDetailList  根据id查询数据库中列表详情
-func GetCommunityDetailList(id int64) (community *models.CommunityDetialList, err error) {
-	community = new(models.CommunityDetialList)
-
-	str := `select community_id,community_name,introduction,create_time from community where community_id = ? `
-	if err = db.Get(community, str, id); err != nil {
+// GetCommunityDetailByID 根据ID查询社区详情
+func GetCommunityDetailByID(id int64) (community *models.CommunityDetial, err error) {
+	community = new(models.CommunityDetial)
+	sqlStr := `select 
+			community_id, community_name, introduction, create_time
+			from community 
+			where community_id = ?
+	`
+	if err := db.Get(community, sqlStr, id); err != nil {
 		if err == sql.ErrNoRows {
 			err = ErrorInvalidID
 		}

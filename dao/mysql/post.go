@@ -2,7 +2,7 @@
  * @Author: Github Doodshen Github 2475169766@qq.com
  * @Date: 2024-03-02 20:06:49
  * @LastEditors: Github Doodshen Github 2475169766@qq.com
- * @LastEditTime: 2024-03-03 16:26:38
+ * @LastEditTime: 2024-03-03 16:33:03
  * @FilePath: \2024.2.3 bluebell\dao\mysql\post.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -10,6 +10,7 @@ package mysql
 
 import "web_app/models"
 
+//CreatePost将帖子加入到数据库
 func CreatePost(p *models.Post) (err error) {
 	//构建sql语句
 	str := `insert into post(
@@ -20,6 +21,7 @@ func CreatePost(p *models.Post) (err error) {
 	return err
 }
 
+//GetPostByID查询帖子通过帖子ID
 func GetPostByID(id int64) (post *models.Post, err error) {
 	post = new(models.Post)
 	sqlStr := `select
