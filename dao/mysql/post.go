@@ -8,9 +8,14 @@
  */
 package mysql
 
-import "web_app/models"
+import (
+	"strings"
+	"web_app/models"
 
-//CreatePost将帖子加入到数据库
+	"github.com/jmoiron/sqlx"
+)
+
+// CreatePost将帖子加入到数据库
 func CreatePost(p *models.Post) (err error) {
 	//构建sql语句
 	str := `insert into post(
@@ -21,7 +26,7 @@ func CreatePost(p *models.Post) (err error) {
 	return err
 }
 
-//GetPostByID查询帖子通过帖子ID
+// GetPostById 根据id查询单个帖子数据
 func GetPostByID(id int64) (post *models.Post, err error) {
 	post = new(models.Post)
 	sqlStr := `select
@@ -33,13 +38,28 @@ func GetPostByID(id int64) (post *models.Post, err error) {
 	return
 }
 
-//GetPostList 查找所有贴子
+// GetPostList 查找所有贴子
 func GetPostList(page, size int64) (posts []*models.Post, err error) {
 	sqlstr := `select
 	post_id, title, content, author_id, community_id, create_time
 	from post
+	order by create_time 
+	DESC
 	limit ?,?`
 	posts = make([]*models.Post, 0, 2)
 	err = db.Select(&posts, sqlstr, (page-1)*size, size)
+	return
+}
+
+// 根据给定的id列表查询帖子
+func GetPostListByIDs(ids []string) (postlist []*models.Post, err error) {
+	sqlstr := `select post_id,title,content,author_id,community_id,create_time from post where post_id in (?) order by FIND_IN_SET(post_id,?)`
+
+	query, args, err := sqlx.In(sqlstr, ids, strings.Join(ids, ","))
+	if err != nil {
+		return
+	}
+	query = db.Rebind(query)
+	err = db.Select(&postlist, query, args...)
 	return
 }
