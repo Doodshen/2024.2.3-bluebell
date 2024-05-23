@@ -1,0 +1,12 @@
+cd tmp/main
+tmp/main.exe
+web_app.log
+web_app.log
+.air.conf
+Makefile
+tmp/main
+controller/tmp/build-errors.log
+controller/tmp/main.exe
+tmp/air_errors.log
+web_app.log
+web_app.log

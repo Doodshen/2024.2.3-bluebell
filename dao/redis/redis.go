@@ -7,10 +7,13 @@ import (
 	"github.com/go-redis/redis"
 )
 
-var rdb *redis.Client
+var (
+	Nil    = redis.Nil
+	client *redis.Client
+)
 
 func Init(cfg *setting.RedisConfig) (err error) {
-	rdb = redis.NewClient(&redis.Options{
+	client = redis.NewClient(&redis.Options{
 		Addr: fmt.Sprintf("%s:%d",
 			cfg.Host,
 			cfg.Port),
@@ -18,11 +21,11 @@ func Init(cfg *setting.RedisConfig) (err error) {
 		DB:       cfg.DB,
 		PoolSize: cfg.PoolSize,
 	})
-	_, err = rdb.Ping().Result()
+	_, err = client.Ping().Result()
 	return
 }
 
 // 封装一个对外的close方法
 func Close() {
-	_ = rdb.Close()
+	_ = client.Close()
 }

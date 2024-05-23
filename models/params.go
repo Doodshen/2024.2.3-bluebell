@@ -20,3 +20,11 @@ type ParamLogin struct {
 	UserName string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
+
+//ParamPostData 投票数据
+type ParamVoteData struct {
+	//UserID
+	PostID    string `json:"post_id" binding:"required"`                         //帖子ID
+	Direction int8   `json:"direction,string" binding:"required,oneof=1 0 -1 " ` //1:赞 2:踩
+
+}
