@@ -18,6 +18,7 @@ package routes
 
 import (
 	"net/http"
+	"time"
 	controller "web_app/controller"
 	"web_app/logger"
 	"web_app/middleware"
@@ -32,7 +33,7 @@ func SetUpRouter(mode string) *gin.Engine {
 	}
 
 	r := gin.New()
-	r.Use(logger.GinLogger(), logger.GinRecovery(true))
+	r.Use(logger.GinLogger(), logger.GinRecovery(true), middleware.RateLimitMiddleware(2*time.Second, 1))
 
 	v1 := r.Group("/api/v1")
 
