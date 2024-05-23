@@ -1,11 +1,12 @@
 package controller
 
 //定义错误码类型
-type Rescode int64
+
+type ResCode int64
 
 //定义错误码
 const (
-	CodeSuccess Rescode = 1000 + iota
+	CodeSuccess ResCode = 1000 + iota
 	CodeInvalidParam
 	CodeUserExist
 	CodeUserNotExist
@@ -15,7 +16,7 @@ const (
 	CodeNeedLogin
 )
 
-var codeMasMap = map[Rescode]string{
+var codeMasMap = map[ResCode]string{
 	CodeSuccess:         "Success",
 	CodeInvalidParam:    "参数错误",
 	CodeUserExist:       "用户已经存在",
@@ -26,7 +27,7 @@ var codeMasMap = map[Rescode]string{
 }
 
 //Msg()根据状态码返回错误信息，并判断该状态码是不是有对应消息，如果没有都返回服务器繁忙
-func (c Rescode) Msg() string {
+func (c ResCode) Msg() string {
 	msg, ok := codeMasMap[c]
 	if !ok {
 		msg = codeMasMap[CodeServerBusy]

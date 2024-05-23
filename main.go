@@ -1,19 +1,12 @@
-/*
- * @Author: Github Doodshen Github 2475169766@qq.com
- * @Date: 2024-02-03 14:58:10
- * @LastEditors: Github Doodshen Github 2475169766@qq.com
- * @LastEditTime: 2024-02-28 11:10:00
- * @FilePath: \2024.2.3 bluebell\main.go
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-/*
- * @Author: Github Doodshen Github 2475169766@qq.com
- * @Date: 2024-01-26 16:54:47
- * @LastEditors: Github Doodshen Github 2475169766@qq.com
- * @LastEditTime: 2024-01-31 20:58:51
- * @FilePath: \2024.1.26 web-app\main.go
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
+// @title bluebell项目接口文档
+// @version 1.0
+// @description Go web开发进阶项目实战课程bluebell
+
+// @contact.name liwenzhou
+// @contact.url
+
+// @host 127.0.0.1:8081
+// @BasePath /api/v1
 package main
 
 import (

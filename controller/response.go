@@ -16,13 +16,13 @@ import (
 
 // 定义返回响应的结构体
 type ResponseData struct {
-	Code Rescode     `json:"code"`
+	Code ResCode     `json:"code"`
 	Msg  interface{} `json:"msg"`
 	Data interface{} `json:"data"`
 }
 
 // ResponseError()响应错误信息
-func ResponseError(c *gin.Context, code Rescode) {
+func ResponseError(c *gin.Context, code ResCode) {
 	responsedata := &ResponseData{
 		Code: code,
 		Msg:  code.Msg(), //根据错误码去查询错误信息
@@ -41,7 +41,7 @@ func ResponseSuccess(c *gin.Context, data interface{}) {
 }
 
 // ResponseErrorWithMsg()响应自定义错误信息
-func ResponseErrorWithMsg(c *gin.Context, code Rescode, msg interface{}) {
+func ResponseErrorWithMsg(c *gin.Context, code ResCode, msg interface{}) {
 	responsedata := &ResponseData{
 		Code: code,
 		Msg:  msg,
