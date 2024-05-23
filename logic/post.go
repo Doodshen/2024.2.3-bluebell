@@ -107,8 +107,14 @@ func GetPostList2(p *models.ParamPostList) (data []*models.ApiPostDetail, err er
 	if err != nil {
 		return
 	}
+
+	//提前查询好每篇帖子的投票数
+	voteData, err := redis.GetPostVoteData(ids)
+	if err != nil {
+		return
+	}
 	//4 将帖子的作者及其分区信息查询出来填充到帖子中
-	for _, post := range posts {
+	for idx, post := range posts {
 		//根据作者id查询作者信息
 		user, err := mysql.GetUserById(post.AuthorID)
 		if err != nil {
@@ -125,6 +131,7 @@ func GetPostList2(p *models.ParamPostList) (data []*models.ApiPostDetail, err er
 		}
 		postDetail := &models.ApiPostDetail{
 			AuthorName:      user.Username,
+			VoteNum:         voteData[idx],
 			Post:            post,
 			CommunityDetial: community,
 		}
